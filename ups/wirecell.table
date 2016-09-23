@@ -1,0 +1,34 @@
+File    = table
+Product = wirecell
+Group:
+  Flavor = ANY
+  Qualifiers = "e10:prof"
+  Action = DefineFQ
+    envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR})
+  Action = ExtraSetup
+    setupRequired(root v6_06_04b -q e10:prof:nu)
+    setupRequired(boost v1_61_0 -q e10:prof)
+    setupRequired(tbb v4_4_3a -q e10:prof)
+Common:
+   Action=setup
+      proddir()
+      setupenv()
+      ExeActionRequired(DefineFQ)
+      envSet (WIRECELL_VERSION, ${UPS_PROD_VERSION} )
+      # define the include directory
+      envSet (WIRECELL_INC, ${WIRECELL_FQ_DIR}/include)
+      # add the lib directory to LD_LIBRARY_PATH
+      envSet (WIRECELL_LIB, ${WIRECELL_FQ_DIR}/lib)
+      if ( test `uname` = "Darwin" )
+	envPrepend(DYLD_LIBRARY_PATH, ${WIRECELL_FQ_DIR}/lib)
+	envPrepend(DYLD_LIBRARY_PATH, ${WIRECELL_FQ_DIR}/lib64)
+      else()
+	envPrepend(LD_LIBRARY_PATH, ${WIRECELL_FQ_DIR}/lib)
+	envPrepend(LD_LIBRARY_PATH, ${WIRECELL_FQ_DIR}/lib64)
+      endif ( test `uname` = "Darwin" )
+      # add the bin directory to the path if it exists
+      pathPrepend(PATH, ${WIRECELL_FQ_DIR}/bin )
+      # requirements
+      exeActionRequired(ExtraSetup)
+
+End:
