@@ -92,7 +92,7 @@ git submodule init
 git submodule update
 
 cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
-tar cjf wirecell-0.0.3.tar.bz2 wire-cell-build  || ssi_die "tar failed"
+tar cjf ${package}-${pkgdotver}.tar.bz2 wire-cell-build  || ssi_die "tar failed"
 rm -rf wire-cell-build
 
 ${SSIBUILDSHIMS_DIR}/bin/make_source_code_tarball ${product_dir} ${package} ${pkgver}
