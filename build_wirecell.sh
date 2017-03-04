@@ -1,12 +1,9 @@
 #!/bin/bash
 #
 
-# if this build script complains that it cannot find bzlib.h, 
-# you need to install bzip2-devel on Scientific Linux
-
 usage()
 {
-   echo "USAGE: `basename ${0}` <product_dir> <e12|e10> <debug|prof> [tar]"
+   echo "USAGE: `basename ${0}` <product_dir> <e14|e10> <debug|prof> [tar]"
 }
 
 # -------------------------------------------------------------------
@@ -58,8 +55,8 @@ fi
 
 package=wirecell
 origpkgver=v0_0_3
-pkgver=${origpkgver}
-ssibuildshims_version=v0_15_04
+pkgver=${origpkgver}a
+ssibuildshims_version=v0_15_09
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 pkgtarfile=${package}-${pkgdotver}.tar.bz2
 
@@ -69,7 +66,7 @@ get_ssibuildshims
 
 source define_basics
 
-if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/lib ]
+if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/bin ]
 then
    ${SSIBUILDSHIMS_DIR}/bin/make_distribution_tarball ${product_dir} ${package} ${pkgver} ${fullqual}
    exit 0
@@ -91,11 +88,11 @@ prof)  cflg="-O3 -g -DNDEBUG -fno-omit-frame-pointer";;
 ;;
 esac
 
-if [[ "${basequal}" == e1[02] ]]
+if [[ "${basequal}" == e1[024] ]]
 then
   cxxflg="${cflg} -std=c++14"
 else
-  die "Qualifier $basequal not recognized."
+  ssi_die "Qualifier $basequal not recognized."
 fi
 
 mkdir -p ${pkgdir}
@@ -115,21 +112,26 @@ setup -B ${package} ${pkgver} -q ${fullqual} -z ${fakedb}:${product_dir}:${PRODU
 set -x
 cd ${pkgdir} || exit 1
 tar xf ${tardir}/${pkgtarfile} || exit 1
+# patch
+patch -b -p0 < ${patchdir}/wirecell.patch  || ssi_die "Failed to apply patch"
 
 cd ${pkgdir}/wire-cell-build || exit 1
 
 env CC=gcc CXX=g++ FC=gfortran ./wcb configure \
-      --with-jsoncpp $JSONCPP_FQ_DIR \
-      --with-tbb $TBB_FQ_DIR \
-      --with-eigen  $EIGEN_DIR \
-      --with-root $ROOTSYS \
-      --boost-includes $BOOST_FQ_DIR/include \
-      --boost-libs $BOOST_FQ_DIR/lib \
+      --with-jsoncpp ${JSONCPP_FQ_DIR} \
+      --with-tbb ${TBB_FQ_DIR} \
+      --with-eigen  ${EIGEN_DIR} \
+      --with-root ${ROOTSYS} \
+      --boost-includes ${BOOST_INC} \
+      --boost-libs ${BOOST_LIB} \
       --boost-mt \
       --prefix="${pkgdir}"
-(( $? == 0 )) || ssi_die "ERROR: wcb configure failed."
+(( $? == 0 )) || ssi_die "wcb configure failed."
 
 ./wcb build install || exit 1
+
+# run tests
+./wcb --alltests --testcmd="env LD_LIBRARY_PATH=$WCT_EXTERNALS/lib:`pwd`/install/lib %s" || ssi_die "tests failed"
 
 set +x
 
@@ -153,7 +155,7 @@ setup ${package} ${pkgver} -q ${fullqual} -z ${product_dir}:${PRODUCTS}
 echo "wirecell is installed at ${WIRECELL_FQ_DIR}"
 
 # this must be last
-if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/lib ]
+if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/bin ]
 then
    ${SSIBUILDSHIMS_DIR}/bin/make_distribution_tarball ${product_dir} ${package} ${pkgver} ${fullqual}
 fi

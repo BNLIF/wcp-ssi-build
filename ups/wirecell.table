@@ -3,32 +3,32 @@ Product = wirecell
 Group:
 
 Flavor = ANY
-Qualifiers = "e12:prof"
+Qualifiers = "e14:prof"
 
   Action = DefineFQ
-    envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e12-prof)
+    envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e14-prof)
 
   Action = ExtraSetup
-    setupRequired(root v6_06_08 -q +e12:+nu:+prof)
-    setupRequired(boost v1_61_0 -q +e12:+prof)
-    setupRequired(tbb v4_4_3a -q +e12:+prof)
-    setupRequired(jsoncpp v1_7_2 -q +e12:+prof)
+    setupRequired(root v6_08_04c -q +e14:+nu:+prof)
+    setupRequired(boost v1_63_0a -q +e14:+prof)
+    setupRequired(tbb v2017_3c -q +e14:+prof)
+    setupRequired(jsoncpp v1_7_7 -q +e14:+prof)
     setupRequired(eigen v3_2_9a)
-    setupRequired( gcc v6_2_0 )
+    setupRequired( gcc v6_3_0 )
 
 Flavor = ANY
-Qualifiers = "e12:debug"
+Qualifiers = "e14:debug"
 
   Action = DefineFQ
-    envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e12-debug)
+    envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e14-debug)
 
   Action = ExtraSetup
-    setupRequired(root v6_06_08 -q +e12:+nu:+debug)
-    setupRequired(boost v1_61_0 -q +e12:+debug)
-    setupRequired(tbb v4_4_3a -q +e12:+debug)
-    setupRequired(jsoncpp v1_7_2 -q +e12:+debug)
+    setupRequired(root v6_08_04c -q +e14:+nu:+debug)
+    setupRequired(boost v1_63_0a -q +e14:+debug)
+    setupRequired(tbb v2017_3c -q +e14:+debug)
+    setupRequired(jsoncpp v1_7_7 -q +e14:+debug)
     setupRequired(eigen v3_2_9a)
-    setupRequired( gcc v6_2_0 )
+    setupRequired( gcc v6_3_0 )
 
 Flavor = ANY
 Qualifiers = "e10:prof"
@@ -37,10 +37,10 @@ Qualifiers = "e10:prof"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e10-prof)
 
   Action = ExtraSetup
-    setupRequired(root v6_06_08 -q +e10:+nu:+prof)
-    setupRequired(boost v1_61_0 -q +e10:+prof)
-    setupRequired(tbb v4_4_3a -q +e10:+prof)
-    setupRequired(jsoncpp v1_7_2 -q +e10:+prof)
+    setupRequired(root v6_08_04c -q +e10:+nu:+prof)
+    setupRequired(boost v1_63_0a -q +e10:+prof)
+    setupRequired(tbb v2017_3c -q +e10:+prof)
+    setupRequired(jsoncpp v1_7_7 -q +e10:+prof)
     setupRequired(eigen v3_2_9a)
     setupRequired( gcc v4_9_3a )
 
@@ -51,10 +51,10 @@ Qualifiers = "e10:debug"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e10-debug)
 
   Action = ExtraSetup
-    setupRequired(root v6_06_08 -q +e10:+nu:+debug)
-    setupRequired(boost v1_61_0 -q +e10:+debug)
-    setupRequired(tbb v4_4_3a -q +e10:+debug)
-    setupRequired(jsoncpp v1_7_2 -q +e10:+debug)
+    setupRequired(root v6_08_04c -q +e10:+nu:+debug)
+    setupRequired(boost v1_63_0a -q +e10:+debug)
+    setupRequired(tbb v2017_3c -q +e10:+debug)
+    setupRequired(jsoncpp v1_7_7 -q +e10:+debug)
     setupRequired(eigen v3_2_9a)
     setupRequired( gcc v4_9_3a )
 
@@ -80,6 +80,9 @@ Common:
       endif ( test `uname` = "Darwin" )
       # add the bin directory to the path
       pathPrepend(PATH, ${WIRECELL_FQ_DIR}/bin )
+      # useful variables
+      envPrepend(CMAKE_PREFIX_PATH, ${WIRECELL_FQ_DIR} )
+      envPrepend(PKG_CONFIG_PATH, ${WIRECELL_FQ_DIR} )
       # requirements
       exeActionRequired(ExtraSetup)
 

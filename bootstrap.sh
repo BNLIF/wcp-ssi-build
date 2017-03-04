@@ -46,8 +46,8 @@ fi
 
 package=wirecell
 origpkgver=v0_0_3
-pkgver=${origpkgver}
-ssibuildshims_version=v0_15_04
+pkgver=${origpkgver}a
+ssibuildshims_version=v0_15_09
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 sourceurl=https://github.com/WireCell/wire-cell-build.git
 
@@ -85,9 +85,10 @@ fi
 cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
 git clone https://github.com/WireCell/wire-cell-build.git
 cd ${pkgdir}/tar/wire-cell-build || ssi_die "could not cd ${pkgdir}/tar/wire-cell-build"
-git co -b v0_0_3 0.0.3
-mv .gitmodules .gitmodules.bak
-cat .gitmodules.bak | sed 's%git@github.com:WireCell/%https://github.com/WireCell/%' > .gitmodules
+git co -b ${pkgver} ${pkgdotver}
+##mv .gitmodules .gitmodules.bak
+##cat .gitmodules.bak | sed 's%git@github.com:WireCell/%https://github.com/WireCell/%' > .gitmodules
+./switch-git-urls
 git submodule init
 git submodule update
 

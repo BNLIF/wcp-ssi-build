@@ -1,0 +1,168 @@
+diff -Naur wire-cell-build/iface/inc/WireCellIface/IChannelNoiseDatabase.h wire-cell-build/iface/inc/WireCellIface/IChannelNoiseDatabase.h
+--- wire-cell-build/iface/inc/WireCellIface/IChannelNoiseDatabase.h	2017-03-04 16:27:31.000000000 -0600
++++ wire-cell-build/iface/inc/WireCellIface/IChannelNoiseDatabase.h	2017-03-04 16:31:35.201051636 -0600
+@@ -4,6 +4,8 @@
+ #include "WireCellUtil/Waveform.h"
+ #include "WireCellUtil/IComponent.h"
+ 
++#include <vector>
++
+ namespace WireCell {
+ 
+     // FIXME: this needs to be simplified into a Noise Subtraction
+diff -Naur wire-cell-build/iface/inc/WireCellIface/IData.h wire-cell-build/iface/inc/WireCellIface/IData.h
+--- wire-cell-build/iface/inc/WireCellIface/IData.h	2017-03-04 16:27:31.000000000 -0600
++++ wire-cell-build/iface/inc/WireCellIface/IData.h	2017-03-04 16:31:51.328917537 -0600
+@@ -6,6 +6,7 @@
+ 
+ #include <boost/range/iterator_range.hpp>
+ #include <memory>		// std::shared_ptr
++#include <vector>
+ 
+ namespace WireCell {
+     template<class Type>
+diff -Naur wire-cell-build/iface/inc/WireCellIface/IFunctionNode.h wire-cell-build/iface/inc/WireCellIface/IFunctionNode.h
+--- wire-cell-build/iface/inc/WireCellIface/IFunctionNode.h	2017-03-04 16:27:31.000000000 -0600
++++ wire-cell-build/iface/inc/WireCellIface/IFunctionNode.h	2017-03-04 16:32:52.031412809 -0600
+@@ -4,6 +4,7 @@
+ #include "WireCellIface/INode.h"
+ 
+ #include <boost/any.hpp>
++#include <vector>
+ 
+ namespace WireCell {
+ 
+diff -Naur wire-cell-build/iface/inc/WireCellIface/IQueuedoutNode.h wire-cell-build/iface/inc/WireCellIface/IQueuedoutNode.h
+--- wire-cell-build/iface/inc/WireCellIface/IQueuedoutNode.h	2017-03-04 16:27:31.000000000 -0600
++++ wire-cell-build/iface/inc/WireCellIface/IQueuedoutNode.h	2017-03-04 16:33:23.446151602 -0600
+@@ -5,6 +5,7 @@
+ 
+ #include <boost/any.hpp>
+ #include <deque>
++#include <vector>
+ 
+ namespace WireCell {
+ 
+diff -Naur wire-cell-build/iface/inc/WireCellIface/ISinkNode.h wire-cell-build/iface/inc/WireCellIface/ISinkNode.h
+--- wire-cell-build/iface/inc/WireCellIface/ISinkNode.h	2017-03-04 16:27:31.000000000 -0600
++++ wire-cell-build/iface/inc/WireCellIface/ISinkNode.h	2017-03-04 16:33:40.326011249 -0600
+@@ -4,6 +4,7 @@
+ #include "WireCellIface/INode.h"
+ 
+ #include <boost/any.hpp>
++#include <vector>
+ 
+ namespace WireCell {
+ 
+diff -Naur wire-cell-build/iface/inc/WireCellIface/ISourceNode.h wire-cell-build/iface/inc/WireCellIface/ISourceNode.h
+--- wire-cell-build/iface/inc/WireCellIface/ISourceNode.h	2017-03-04 16:27:31.000000000 -0600
++++ wire-cell-build/iface/inc/WireCellIface/ISourceNode.h	2017-03-04 16:33:48.620942279 -0600
+@@ -4,6 +4,7 @@
+ #include "WireCellIface/INode.h"
+ 
+ #include <boost/any.hpp>
++#include <vector>
+ 
+ namespace WireCell {
+ 
+diff -Naur wire-cell-build/iface/inc/WireCellIface/SimplePlaneSlice.h wire-cell-build/iface/inc/WireCellIface/SimplePlaneSlice.h
+--- wire-cell-build/iface/inc/WireCellIface/SimplePlaneSlice.h	2017-03-04 16:27:31.000000000 -0600
++++ wire-cell-build/iface/inc/WireCellIface/SimplePlaneSlice.h	2017-03-04 16:34:49.874432969 -0600
+@@ -3,6 +3,8 @@
+ 
+ #include "WireCellIface/IPlaneSlice.h"
+ 
++#include <vector>
++
+ namespace WireCell {
+ 
+     class SimplePlaneSlice : public WireCell::IPlaneSlice {
+diff -Naur wire-cell-build/util/inc/WireCellUtil/ConfigManager.h wire-cell-build/util/inc/WireCellUtil/ConfigManager.h
+--- wire-cell-build/util/inc/WireCellUtil/ConfigManager.h	2017-03-04 16:27:37.000000000 -0600
++++ wire-cell-build/util/inc/WireCellUtil/ConfigManager.h	2017-03-04 16:29:50.353923418 -0600
+@@ -1,6 +1,7 @@
+ #ifndef WIRECELL_CONFIGMANAGER
+ #define WIRECELL_CONFIGMANAGER
+ 
++#include <vector>
+ #include "WireCellUtil/Configuration.h"
+ 
+ namespace WireCell {
+diff -Naur wire-cell-build/util/inc/WireCellUtil/Configuration.h wire-cell-build/util/inc/WireCellUtil/Configuration.h
+--- wire-cell-build/util/inc/WireCellUtil/Configuration.h	2017-03-04 16:27:37.000000000 -0600
++++ wire-cell-build/util/inc/WireCellUtil/Configuration.h	2017-03-04 16:29:50.353923418 -0600
+@@ -1,6 +1,7 @@
+ #ifndef WIRECELL_CONFIGURATION
+ #define WIRECELL_CONFIGURATION
+ 
++#include <vector>
+ #include <json/json.h>
+ #include <boost/algorithm/string/split.hpp>
+ #include <boost/algorithm/string/classification.hpp>
+diff -Naur wire-cell-build/util/inc/WireCellUtil/D3Vector.h wire-cell-build/util/inc/WireCellUtil/D3Vector.h
+--- wire-cell-build/util/inc/WireCellUtil/D3Vector.h	2017-03-04 16:27:37.000000000 -0600
++++ wire-cell-build/util/inc/WireCellUtil/D3Vector.h	2017-03-04 16:29:50.354923409 -0600
+@@ -8,6 +8,7 @@
+ 
+ #include <iostream>
+ #include <cmath>
++#include <vector>
+ #include <algorithm>
+  
+ namespace WireCell {
+diff -Naur wire-cell-build/util/inc/WireCellUtil/DfpGraph.h wire-cell-build/util/inc/WireCellUtil/DfpGraph.h
+--- wire-cell-build/util/inc/WireCellUtil/DfpGraph.h	2017-03-04 16:27:37.000000000 -0600
++++ wire-cell-build/util/inc/WireCellUtil/DfpGraph.h	2017-03-04 16:29:50.354923409 -0600
+@@ -1,6 +1,7 @@
+ #ifndef WIRECELLUTIL_DFPGRAPH
+ #define WIRECELLUTIL_DFPGRAPH
+ 
++#include <vector>
+ #include "WireCellUtil/Configuration.h"
+ #include "WireCellUtil/String.h"
+ #include <boost/graph/adjacency_list.hpp>
+diff -Naur wire-cell-build/util/inc/WireCellUtil/IteratorBase.h wire-cell-build/util/inc/WireCellUtil/IteratorBase.h
+--- wire-cell-build/util/inc/WireCellUtil/IteratorBase.h	2017-03-04 16:27:37.000000000 -0600
++++ wire-cell-build/util/inc/WireCellUtil/IteratorBase.h	2017-03-04 16:29:50.355923401 -0600
+@@ -1,6 +1,8 @@
+ #ifndef WIRECELL_ITERATORBASE
+ #define WIRECELL_ITERATORBASE
+ 
++#include <vector>
++
+ namespace WireCell {
+ 
+     /** An abstract base class for an iterator providing access to an
+diff -Naur wire-cell-build/util/inc/WireCellUtil/Point.h wire-cell-build/util/inc/WireCellUtil/Point.h
+--- wire-cell-build/util/inc/WireCellUtil/Point.h	2017-03-04 16:27:37.000000000 -0600
++++ wire-cell-build/util/inc/WireCellUtil/Point.h	2017-03-04 16:29:50.355923401 -0600
+@@ -4,6 +4,7 @@
+ #include "WireCellUtil/D3Vector.h"
+ #include "WireCellUtil/Configuration.h"
+ 
++#include <vector>
+ #include <set>
+ #include <memory>		// auto_ptr
+ 
+diff -Naur wire-cell-build/util/inc/WireCellUtil/TimeKeeper.h wire-cell-build/util/inc/WireCellUtil/TimeKeeper.h
+--- wire-cell-build/util/inc/WireCellUtil/TimeKeeper.h	2017-03-04 16:27:37.000000000 -0600
++++ wire-cell-build/util/inc/WireCellUtil/TimeKeeper.h	2017-03-04 16:29:50.356923393 -0600
+@@ -1,6 +1,7 @@
+ #ifndef WIRECELLUTIL_TIMEKEEPER
+ #define WIRECELLUTIL_TIMEKEEPER
+ 
++#include <vector>
+ #include <boost/date_time/posix_time/posix_time_types.hpp>
+ 
+ namespace WireCell {
+diff -Naur wire-cell-build/util/test/test_iterators.cxx wire-cell-build/util/test/test_iterators.cxx
+--- wire-cell-build/util/test/test_iterators.cxx	2017-03-04 16:27:37.000000000 -0600
++++ wire-cell-build/util/test/test_iterators.cxx	2017-03-04 16:29:50.356923393 -0600
+@@ -6,6 +6,7 @@
+ 
+ #include <boost/function.hpp>
+ 
++#include <cmath>
+ #include <vector>
+ #include <iostream>
+ #include <algorithm>		// copy_if
