@@ -6,7 +6,7 @@
 
 usage()
 {
-   echo "USAGE: `basename ${0}` <product_dir> <e12|e10> <debug|prof> [tar]"
+   echo "USAGE: `basename ${0}` <product_dir> <e10> <debug|prof> [tar]"
 }
 
 # -------------------------------------------------------------------
@@ -57,9 +57,9 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_0_3
+origpkgver=v0_5_2
 pkgver=${origpkgver}
-ssibuildshims_version=v0_15_04
+ssibuildshims_version=v0_16_00
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 pkgtarfile=${package}-${pkgdotver}.tar.bz2
 
@@ -69,7 +69,7 @@ get_ssibuildshims
 
 source define_basics
 
-if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/lib ]
+if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/bin ]
 then
    ${SSIBUILDSHIMS_DIR}/bin/make_distribution_tarball ${product_dir} ${package} ${pkgver} ${fullqual}
    exit 0
@@ -95,7 +95,7 @@ if [[ "${basequal}" == e1[02] ]]
 then
   cxxflg="${cflg} -std=c++14"
 else
-  die "Qualifier $basequal not recognized."
+  ssi_die "Qualifier $basequal not recognized."
 fi
 
 mkdir -p ${pkgdir}
@@ -118,11 +118,17 @@ tar xf ${tardir}/${pkgtarfile} || exit 1
 
 cd ${pkgdir}/wire-cell-build || exit 1
 
+echo $PKG_CONFIG_PATH
+
 env CC=gcc CXX=g++ FC=gfortran ./wcb configure \
+      --fftw-no-single=true \
       --with-jsoncpp $JSONCPP_FQ_DIR \
       --with-tbb $TBB_FQ_DIR \
       --with-eigen  $EIGEN_DIR \
       --with-root $ROOTSYS \
+      --with-fftw $FFTW_FQ_DIR \
+      --with-fftw-include $FFTW_INC \
+      --with-fftw-lib $FFTW_LIBRARY \
       --boost-includes $BOOST_FQ_DIR/include \
       --boost-libs $BOOST_FQ_DIR/lib \
       --boost-mt \
@@ -130,6 +136,9 @@ env CC=gcc CXX=g++ FC=gfortran ./wcb configure \
 (( $? == 0 )) || ssi_die "ERROR: wcb configure failed."
 
 ./wcb build install || exit 1
+
+# run tests
+./wcb --alltests --testcmd="env LD_LIBRARY_PATH=$WCT_EXTERNALS/lib:`pwd`/install/lib %s" || ssi_die "tests failed"
 
 set +x
 
@@ -153,7 +162,7 @@ setup ${package} ${pkgver} -q ${fullqual} -z ${product_dir}:${PRODUCTS}
 echo "wirecell is installed at ${WIRECELL_FQ_DIR}"
 
 # this must be last
-if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/lib ]
+if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/bin ]
 then
    ${SSIBUILDSHIMS_DIR}/bin/make_distribution_tarball ${product_dir} ${package} ${pkgver} ${fullqual}
 fi
