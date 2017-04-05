@@ -54,9 +54,9 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_0_3
-pkgver=${origpkgver}b
-ssibuildshims_version=v0_15_09
+origpkgver=v0_5_2
+pkgver=${origpkgver}
+ssibuildshims_version=v0_16_00
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 pkgtarfile=${package}-${pkgdotver}.tar.bz2
 
@@ -117,13 +117,19 @@ patch -b -p0 < ${patchdir}/wirecell.patch  || ssi_die "Failed to apply patch"
 
 cd ${pkgdir}/wire-cell-build || exit 1
 
+echo $PKG_CONFIG_PATH
+
 env CC=gcc CXX=g++ FC=gfortran ./wcb configure \
-      --with-jsoncpp ${JSONCPP_FQ_DIR} \
-      --with-tbb ${TBB_FQ_DIR} \
-      --with-eigen  ${EIGEN_DIR} \
-      --with-root ${ROOTSYS} \
-      --boost-includes ${BOOST_INC} \
-      --boost-libs ${BOOST_LIB} \
+      --fftw-no-single=true \
+      --with-jsoncpp $JSONCPP_FQ_DIR \
+      --with-tbb $TBB_FQ_DIR \
+      --with-eigen  $EIGEN_DIR \
+      --with-root $ROOTSYS \
+      --with-fftw $FFTW_FQ_DIR \
+      --with-fftw-include $FFTW_INC \
+      --with-fftw-lib $FFTW_LIBRARY \
+      --boost-includes $BOOST_FQ_DIR/include \
+      --boost-libs $BOOST_FQ_DIR/lib \
       --boost-mt \
       --prefix="${pkgdir}"
 (( $? == 0 )) || ssi_die "wcb configure failed."
