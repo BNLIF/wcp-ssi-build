@@ -55,7 +55,7 @@ fi
 
 package=wirecell
 origpkgver=v0_5_2
-pkgver=${origpkgver}a
+pkgver=${origpkgver}b
 ssibuildshims_version=v0_16_00
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 pkgtarfile=${package}-${pkgdotver}.tar.bz2
