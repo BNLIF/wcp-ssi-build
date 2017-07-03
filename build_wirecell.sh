@@ -54,8 +54,8 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_5_2
-pkgver=${origpkgver}c
+origpkgver=v0_6_0dev
+pkgver=${origpkgver}
 ssibuildshims_version=v0_16_00
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 pkgtarfile=${package}-${pkgdotver}.tar.bz2
@@ -113,31 +113,31 @@ set -x
 cd ${pkgdir} || exit 1
 tar xf ${tardir}/${pkgtarfile} || exit 1
 # patch
-patch -b -p0 < ${patchdir}/wirecell.patch  || ssi_die "Failed to apply patch"
+# patch -b -p0 < ${patchdir}/wirecell.patch  || ssi_die "Failed to apply patch"
 
 cd ${pkgdir}/wire-cell-build || exit 1
 
 echo $PKG_CONFIG_PATH
 
 env CC=gcc CXX=g++ FC=gfortran ./wcb configure \
-      --fftw-no-single=true \
-      --with-jsoncpp $JSONCPP_FQ_DIR \
-      --with-tbb $TBB_FQ_DIR \
-      --with-eigen  $EIGEN_DIR \
-      --with-root $ROOTSYS \
-      --with-fftw $FFTW_FQ_DIR \
-      --with-fftw-include $FFTW_INC \
-      --with-fftw-lib $FFTW_LIBRARY \
-      --boost-includes $BOOST_FQ_DIR/include \
-      --boost-libs $BOOST_FQ_DIR/lib \
+      --with-jsoncpp=$JSONCPP_FQ_DIR \
+      --with-jsonnet=$JSONNET_FQ_DIR \
+      --with-tbb=$TBB_FQ_DIR \
+      --with-eigen=$EIGEN_DIR \
+      --with-root=$ROOTSYS \
+      --with-fftw=$FFTW_FQ_DIR \
+      --with-fftw-include=$FFTW_INC \
+      --with-fftw-lib=$FFTW_LIBRARY \
+      --boost-includes=$BOOST_FQ_DIR/include \
+      --boost-libs=$BOOST_FQ_DIR/lib \
       --boost-mt \
       --prefix="${pkgdir}"
 (( $? == 0 )) || ssi_die "wcb configure failed."
 
-./wcb build install || exit 1
+./wcb --notests build install || exit 1
 
-# run tests
-./wcb --alltests --testcmd="env LD_LIBRARY_PATH=$WCT_EXTERNALS/lib:`pwd`/install/lib %s" || ssi_die "tests failed"
+# run tests.  Note, wcb does not return failure if some tests fail.
+./wcb --alltests
 
 set +x
 
@@ -149,7 +149,8 @@ then
 fi
 
 # real ups declare
-${SSIBUILDSHIMS_DIR}/bin/declare_product ${product_dir} ${package} ${pkgver} ${fullqual}
+${SSIBUILDSHIMS_DIR}/bin/declare_product ${product_dir} ${package} ${pkgver} ${fullqual} || \
+  ssi_die "failed to declare ${package} ${pkgver} ${fullqual}"
 
 # -------------------------------------------------------------------
 # common bottom stuff
