@@ -54,8 +54,8 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-pkgdotver=0.6.0
-origpkgver=v0_6_0
+pkgdotver=0.6.1
+origpkgver=v0_6_1
 pkgver=${origpkgver}
 ssibuildshims_version=v0_19_00
 

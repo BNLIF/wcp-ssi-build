@@ -47,11 +47,11 @@ fi
 package=wirecell
 sourceurl=https://github.com/WireCell/wire-cell-build.git
 # upstream release tag
-pkgdotver=0.6.0
+pkgdotver=0.6.1
 # upstream release branch
 pkgdotbranch=0.6.x
 # UPS spelling
-origpkgver=v0_6_0
+origpkgver=v0_6_1
 pkgver=${origpkgver}
 
 ssibuildshims_version=v0_19_00
