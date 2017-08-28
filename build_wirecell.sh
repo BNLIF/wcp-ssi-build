@@ -54,11 +54,13 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
+pkgdotver=0.6.0
 origpkgver=v0_6_0
 pkgver=${origpkgver}
 ssibuildshims_version=v0_19_00
-pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
-pkgtarfile=${package}-${pkgdotver}.tar.bz2
+
+srcname=${package}-${pkgdotver}
+pkgtarfile=${srcname}.tar.bz2
 
 get_this_dir
 
@@ -115,14 +117,13 @@ tar xf ${tardir}/${pkgtarfile} || exit 1
 # patch
 # patch -b -p0 < ${patchdir}/wirecell.patch  || ssi_die "Failed to apply patch"
 
-cd ${pkgdir}/wire-cell-build || exit 1
+cd ${pkgdir}/${srcname} || exit 1
 
 echo $PKG_CONFIG_PATH
 
 env CC=gcc CXX=g++ FC=gfortran ./wcb configure \
       --with-jsoncpp=$JSONCPP_FQ_DIR \
       --with-jsonnet=$JSONNET_FQ_DIR \
-      --with-tbb=$TBB_FQ_DIR \
       --with-eigen=$EIGEN_DIR \
       --with-root=$ROOTSYS \
       --with-fftw=$FFTW_FQ_DIR \

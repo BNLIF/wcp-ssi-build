@@ -45,11 +45,16 @@ then
 fi
 
 package=wirecell
+sourceurl=https://github.com/WireCell/wire-cell-build.git
+# upstream release tag
+pkgdotver=0.6.0
+# upstream release branch
+pkgdotbranch=0.6.x
+# UPS spelling
 origpkgver=v0_6_0
 pkgver=${origpkgver}
+
 ssibuildshims_version=v0_19_00
-pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
-sourceurl=https://github.com/WireCell/wire-cell-build.git
 
 get_this_dir
 
@@ -76,23 +81,39 @@ ${SSIBUILDSHIMS_DIR}/bin/make_source_code_base ${product_dir} \
                                                ${pkgver} \
                                                ${thisdir}
 
+# for ssi_die
+source "${SSIBUILDSHIMS_DIR}/bin/ssi_functions"
+
 pkgdir=${product_dir}/${package}/${pkgver}
 if [ ! -d ${pkgdir}/tar ]
 then
    echo "ERROR: cannot find ${pkgdir}/tar"
    exit 1
 fi
-cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
-git clone https://github.com/WireCell/wire-cell-build.git
-cd ${pkgdir}/tar/wire-cell-build || ssi_die "could not cd ${pkgdir}/tar/wire-cell-build"
-# git checkout -b ${pkgver} ${pkgdotver}
-# ./switch-git-urls
-git submodule init
-git submodule update
+
+set -x
 
 cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
-tar cjf ${package}-${pkgdotver}.tar.bz2 wire-cell-build  || ssi_die "tar failed"
-rm -rf wire-cell-build
+srcname="wirecell-${pkgdotver}"
+git clone --recursive --branch ${pkgdotbranch} ${sourceurl} ${srcname}
+cd ${pkgdir}/tar/${srcname} || ssi_die "could not cd ${pkgdir}/tar/${srcname}"
+
+# Wire Cell Toolkit source is composed of several git modules brought
+# together via git submodule.  Released source should all be
+# accessible via anonymous git access to GitHub.
+git checkout -b ${pkgdotver} ${pkgdotver}
+git submodule init
+git submodule update
+git submodule foreach git checkout -b ${pkgdotver} ${pkgdotver}
+
+(
+    git ls-files
+    git submodule foreach --recursive --quiet \
+	'git ls-files --with-tree="$sha1"|sed "s#^#$path/#"'
+) | sed "s#^#${srcname}/#" | xargs tar -c -C.. -f "../${srcname}.tar.bz2"
+
+cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
+rm -rf ${srcname}
 
 ${SSIBUILDSHIMS_DIR}/bin/make_source_code_tarball ${product_dir} ${package} ${pkgver}
 
