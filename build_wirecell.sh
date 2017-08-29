@@ -127,6 +127,7 @@ env CC=gcc CXX=g++ FC=gfortran ./wcb configure \
       --with-fftw=$FFTW_FQ_DIR \
       --with-fftw-include=$FFTW_INC \
       --with-fftw-lib=$FFTW_LIBRARY \
+      --with-tbb=no \
       --boost-includes=$BOOST_FQ_DIR/include \
       --boost-libs=$BOOST_FQ_DIR/lib \
       --boost-mt \
