@@ -54,9 +54,9 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-pkgdotver=0.6.1
 origpkgver=v0_6_1
 pkgver=${origpkgver}
+pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v0_19_00
 
 srcname=${package}-${pkgdotver}
@@ -114,8 +114,6 @@ setup -B ${package} ${pkgver} -q ${fullqual} -z ${fakedb}:${product_dir}:${PRODU
 set -x
 cd ${pkgdir} || exit 1
 tar xf ${tardir}/${pkgtarfile} || exit 1
-# patch
-# patch -b -p0 < ${patchdir}/wirecell.patch  || ssi_die "Failed to apply patch"
 
 cd ${pkgdir}/${srcname} || exit 1
 
