@@ -3,7 +3,7 @@
 
 usage()
 {
-   echo "USAGE: `basename ${0}` <product_dir> <e14|e10> <debug|prof> [tar]"
+   echo "USAGE: `basename ${0}` <product_dir> <e15|e14|e10> <debug|prof> [tar]"
 }
 
 # -------------------------------------------------------------------
@@ -55,7 +55,7 @@ fi
 
 package=wirecell
 origpkgver=v0_6_2
-pkgver=${origpkgver}
+pkgver=${origpkgver}a
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_02_00
 
@@ -90,7 +90,7 @@ prof)  cflg="-O3 -g -DNDEBUG -fno-omit-frame-pointer";;
 ;;
 esac
 
-if [[ "${basequal}" == e1[024] ]]
+if [[ "${basequal}" == e1[0245] ]]
 then
   cxxflg="${cflg} -std=c++14"
 else

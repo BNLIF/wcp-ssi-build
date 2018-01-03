@@ -11,8 +11,8 @@ Qualifiers = "e15:prof"
   Action = ExtraSetup
     setupRequired(root v6_10_08b -q +e15:+nu:+prof)
     setupRequired(boost v1_65_1 -q +e15:+prof)
-    setupRequired(jsoncpp v1_7_7 -q +e15:+prof)
-    setupRequired(jsonnet v0_9_3 -q +e15:+prof)
+    setupRequired(jsoncpp v1_7_7a -q +e15:+prof)
+    setupRequired(jsonnet v0_9_3a -q +e15:+prof)
     setupRequired( gcc v6_4_0 )
 
 Flavor = ANY
@@ -24,8 +24,8 @@ Qualifiers = "e15:debug"
   Action = ExtraSetup
     setupRequired(root v6_10_08b -q +e15:+nu:+debug)
     setupRequired(boost v1_65_1 -q +e15:+debug)
-    setupRequired(jsoncpp v1_7_7 -q +e15:+debug)
-    setupRequired(jsonnet v0_9_3 -q +e15:+debug)
+    setupRequired(jsoncpp v1_7_7a -q +e15:+debug)
+    setupRequired(jsonnet v0_9_3a -q +e15:+debug)
     setupRequired( gcc v6_4_0 )
 
 Flavor = ANY
@@ -37,8 +37,8 @@ Qualifiers = "e14:prof"
   Action = ExtraSetup
     setupRequired(root v6_10_08b -q +e14:+nu:+prof)
     setupRequired(boost v1_65_1 -q +e14:+prof)
-    setupRequired(jsoncpp v1_7_7 -q +e14:+prof)
-    setupRequired(jsonnet v0_9_3 -q +e14:+prof)
+    setupRequired(jsoncpp v1_7_7a -q +e14:+prof)
+    setupRequired(jsonnet v0_9_3a -q +e14:+prof)
     setupRequired( gcc v6_3_0 )
 
 Flavor = ANY
@@ -50,8 +50,8 @@ Qualifiers = "e14:debug"
   Action = ExtraSetup
     setupRequired(root v6_10_08b -q +e14:+nu:+debug)
     setupRequired(boost v1_65_1 -q +e14:+debug)
-    setupRequired(jsoncpp v1_7_7 -q +e14:+debug)
-    setupRequired(jsonnet v0_9_3 -q +e14:+debug)
+    setupRequired(jsoncpp v1_7_7a -q +e14:+debug)
+    setupRequired(jsonnet v0_9_3a -q +e14:+debug)
     setupRequired( gcc v6_3_0 )
 
 Flavor = ANY
@@ -63,8 +63,8 @@ Qualifiers = "e10:prof"
   Action = ExtraSetup
     setupRequired(root v6_10_08b -q +e10:+nu:+prof)
     setupRequired(boost v1_65_1 -q +e10:+prof)
-    setupRequired(jsoncpp v1_7_7 -q +e10:+prof)
-    setupRequired(jsonnet v0_9_3 -q +e10:+prof)
+    setupRequired(jsoncpp v1_7_7a -q +e10:+prof)
+    setupRequired(jsonnet v0_9_3a -q +e10:+prof)
     setupRequired( gcc v4_9_3a )
 
 Flavor = ANY
@@ -76,8 +76,8 @@ Qualifiers = "e10:debug"
   Action = ExtraSetup
     setupRequired(root v6_10_08b -q +e10:+nu:+debug)
     setupRequired(boost v1_65_1 -q +e10:+debug)
-    setupRequired(jsoncpp v1_7_7 -q +e10:+debug)
-    setupRequired(jsonnet v0_9_3 -q +e10:+debug)
+    setupRequired(jsoncpp v1_7_7a -q +e10:+debug)
+    setupRequired(jsonnet v0_9_3a -q +e10:+debug)
     setupRequired( gcc v4_9_3a )
 
 Common:
