@@ -3,6 +3,32 @@ Product = wirecell
 Group:
 
 Flavor = ANY
+Qualifiers = "c2:prof"
+
+  Action = DefineFQ
+    envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-prof)
+
+  Action = ExtraSetup
+    setupRequired(root v6_12_04e -q +c2:+prof)
+    setupRequired(boost v1_66_0 -q +c2:+prof)
+    setupRequired(jsoncpp v1_7_7a -q +c2:+prof)
+    setupRequired(jsonnet v0_9_3a -q +c2:+prof)
+    setupRequired( clang v5_0_1 )
+
+Flavor = ANY
+Qualifiers = "c2:debug"
+
+  Action = DefineFQ
+    envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-debug)
+
+  Action = ExtraSetup
+    setupRequired(root v6_12_04e -q +c2:+debug)
+    setupRequired(boost v1_66_0 -q +c2:+debug)
+    setupRequired(jsoncpp v1_7_7a -q +c2:+debug)
+    setupRequired(jsonnet v0_9_3a -q +c2:+debug)
+    setupRequired( clang v5_0_1 )
+
+Flavor = ANY
 Qualifiers = "e15:prof"
 
   Action = DefineFQ
