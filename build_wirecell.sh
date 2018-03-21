@@ -3,7 +3,7 @@
 
 usage()
 {
-   echo "USAGE: `basename ${0}` <product_dir> <e15|e14> <debug|prof> [tar]"
+   echo "USAGE: `basename ${0}` <product_dir> <e14|e15|c2> <debug|prof> [tar]"
 }
 
 # -------------------------------------------------------------------
@@ -55,9 +55,9 @@ fi
 
 package=wirecell
 origpkgver=v0_6_2
-pkgver=${origpkgver}b
+pkgver=${origpkgver}c
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
-ssibuildshims_version=v1_04_02
+ssibuildshims_version=v1_04_04
 
 srcname=${package}-${pkgdotver}
 pkgtarfile=${srcname}.tar.bz2
@@ -92,7 +92,14 @@ esac
 
 if [[ "${basequal}" == e1[0245] ]]
 then
+  cc=gcc
+  cxx=g++
   cxxflg="${cflg} -std=c++14"
+elif [[ "${basequal}" == c2 ]]
+then
+  cc=clang
+  cxx=clang++
+  cxxflg="${cflg} -std=c++17"
 else
   ssi_die "Qualifier $basequal not recognized."
 fi
@@ -119,7 +126,7 @@ cd ${pkgdir}/${srcname} || exit 1
 
 echo $PKG_CONFIG_PATH
 
-env CC=gcc CXX=g++ FC=gfortran ./wcb configure \
+env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
       --with-jsoncpp=$JSONCPP_FQ_DIR \
       --with-jsonnet=$JSONNET_FQ_DIR \
       --with-eigen=$EIGEN_DIR \
