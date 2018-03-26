@@ -1,12 +1,11 @@
-diff --git a/util/inc/WireCellUtil/IFactory.h b/util/inc/WireCellUtil/IFactory.h
-index 205e934..447eae1 100644
---- a/util/inc/WireCellUtil/IFactory.h
-+++ b/util/inc/WireCellUtil/IFactory.h
-@@ -30,6 +30,7 @@ namespace WireCell {
+diff -Naur a/util/inc/WireCellUtil/IFactory.h b/util/inc/WireCellUtil/IFactory.h
+--- a/util/inc/WireCellUtil/IFactory.h	2018-03-26 16:33:59.000000000 -0500
++++ b/util/inc/WireCellUtil/IFactory.h	2018-03-26 16:37:53.348377953 -0500
+@@ -30,6 +30,7 @@
  
-        /// Create an instance by name.
-        virtual Interface::pointer create(const std::string& name) = 0;
+ 	/// Create an instance by name.
+ 	virtual Interface::pointer create(const std::string& name) = 0;
 +        using IFactory::create;
  
          /// Return existing instance or nullptr if not found.
-        virtual Interface::pointer find(const std::string& name) = 0;
+ 	virtual Interface::pointer find(const std::string& name) = 0;
