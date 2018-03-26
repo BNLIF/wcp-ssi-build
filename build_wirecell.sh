@@ -123,6 +123,7 @@ cd ${pkgdir} || exit 1
 tar xf ${tardir}/${pkgtarfile} || exit 1
 
 cd ${pkgdir}/${srcname} || exit 1
+patch -b -p1 < "${patchdir}/${srcname}.patch" || ssi_die "application of patch ${patchdir}/${srcname}.patch failed."
 
 echo $PKG_CONFIG_PATH
 
