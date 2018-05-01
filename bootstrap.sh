@@ -46,7 +46,7 @@ fi
 
 package=wirecell
 origpkgver=v0_6_2
-pkgver=${origpkgver}c
+pkgver=${origpkgver}d
 ssibuildshims_version=v1_04_04
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 sourceurl=https://github.com/WireCell/wire-cell-build.git

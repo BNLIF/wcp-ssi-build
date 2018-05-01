@@ -3,7 +3,7 @@
 
 usage()
 {
-   echo "USAGE: `basename ${0}` <product_dir> <e14|e15|c2> <debug|prof> [tar]"
+   echo "USAGE: `basename ${0}` <product_dir> <e14|e15|e17|c2> <debug|prof> [tar]"
 }
 
 # -------------------------------------------------------------------
@@ -55,7 +55,7 @@ fi
 
 package=wirecell
 origpkgver=v0_6_2
-pkgver=${origpkgver}c
+pkgver=${origpkgver}d
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_04_04
 
@@ -95,6 +95,11 @@ then
   cc=gcc
   cxx=g++
   cxxflg="${cflg} -std=c++14"
+elif [[ "${basequal}" == e17 ]]
+then
+  cc=gcc
+  cxx=g++
+  cxxflg="${cflg} -std=c++17"
 elif [[ "${basequal}" == c2 ]]
 then
   cc=clang
@@ -118,6 +123,21 @@ ${SSIBUILDSHIMS_DIR}/bin/fake_declare_product ${product_dir} ${package} ${pkgver
 
 setup -B ${package} ${pkgver} -q ${fullqual} -z ${fakedb}:${product_dir}:${PRODUCTS} || ssi_die "fake setup failed"
 
+if [ -z ${EIGEN_DIR} ]
+then
+   echo "ERROR: failed to setup eigen"
+   exit 1
+else
+   echo "EIGEN_DIR: ${EIGEN_DIR}"
+fi
+if [ -z ${ROOTSYS} ]
+then
+   echo "ERROR: failed to setup root"
+   exit 1
+else
+   echo "ROOTSYS: ${ROOTSYS}"
+fi
+
 set -x
 cd ${pkgdir} || exit 1
 tar xf ${tardir}/${pkgtarfile} || exit 1
@@ -130,8 +150,8 @@ echo $PKG_CONFIG_PATH
 env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
       --with-jsoncpp=$JSONCPP_FQ_DIR \
       --with-jsonnet=$JSONNET_FQ_DIR \
-      --with-eigen=$EIGEN_DIR \
-      --with-root=$ROOTSYS \
+      --with-eigen=${EIGEN_DIR} \
+      --with-root=${ROOTSYS} \
       --with-fftw=$FFTW_FQ_DIR \
       --with-fftw-include=$FFTW_INC \
       --with-fftw-lib=$FFTW_LIBRARY \
