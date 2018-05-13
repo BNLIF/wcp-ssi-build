@@ -61,10 +61,10 @@ Qualifiers = "e15:prof"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e15-prof)
 
   Action = ExtraSetup
-    setupRequired(root v6_12_06a -q +e15:+prof)
-    setupRequired(boost v1_66_0a -q +e15:+prof)
-    setupRequired(jsoncpp v1_7_7c -q +e15:+prof)
-    setupRequired(jsonnet v0_9_3c -q +e15:+prof)
+    setupRequired(root v6_12_04e -q +e15:+prof)
+    setupRequired(boost v1_66_0 -q +e15:+prof)
+    setupRequired(jsoncpp v1_7_7b -q +e15:+prof)
+    setupRequired(jsonnet v0_9_3b -q +e15:+prof)
     setupRequired( gcc v6_4_0 )
 
 Flavor = ANY
@@ -74,10 +74,10 @@ Qualifiers = "e15:debug"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e15-debug)
 
   Action = ExtraSetup
-    setupRequired(root v6_12_06a -q +e15:+debug)
-    setupRequired(boost v1_66_0a -q +e15:+debug)
-    setupRequired(jsoncpp v1_7_7c -q +e15:+debug)
-    setupRequired(jsonnet v0_9_3c -q +e15:+debug)
+    setupRequired(root v6_12_04e -q +e15:+debug)
+    setupRequired(boost v1_66_0 -q +e15:+debug)
+    setupRequired(jsoncpp v1_7_7b -q +e15:+debug)
+    setupRequired(jsonnet v0_9_3b -q +e15:+debug)
     setupRequired( gcc v6_4_0 )
 
 Flavor = ANY
@@ -134,6 +134,6 @@ Common:
       envPrepend(PKG_CONFIG_PATH, ${WIRECELL_FQ_DIR} )
       # requirements
       exeActionRequired(ExtraSetup)
-      setupRequired(eigen v3_3_4a)
+      setupRequired(eigen v3_3_3)
 
 End:
