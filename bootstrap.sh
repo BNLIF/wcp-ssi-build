@@ -45,8 +45,8 @@ then
 fi
 
 package=wirecell
-origpkgver=v0_6_2
-pkgver=${origpkgver}d
+origpkgver=v0_7_0
+pkgver=${origpkgver}
 ssibuildshims_version=v1_04_04
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 sourceurl=https://github.com/WireCell/wire-cell-build.git
@@ -89,7 +89,7 @@ set -x
 cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
 git clone ${sourceurl} ${srcname}
 cd ${pkgdir}/tar/${srcname} || ssi_die "could not cd ${pkgdir}/tar/${srcname}"
-git co -b ${pkgver} ${pkgdotver}
+git checkout -b ${pkgver} ${pkgdotver}
 git submodule init
 git submodule update
 git submodule foreach git checkout -b ${pkgver} ${pkgdotver}

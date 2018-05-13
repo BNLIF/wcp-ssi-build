@@ -54,8 +54,8 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_6_2
-pkgver=${origpkgver}d
+origpkgver=v0_7_0
+pkgver=${origpkgver}
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_04_04
 
@@ -143,7 +143,7 @@ cd ${pkgdir} || exit 1
 tar xf ${tardir}/${pkgtarfile} || exit 1
 
 cd ${pkgdir}/${srcname} || exit 1
-patch -b -p1 < "${patchdir}/${srcname}.patch" || ssi_die "application of patch ${patchdir}/${srcname}.patch failed."
+# patch -b -p1 < "${patchdir}/${srcname}.patch" || ssi_die "application of patch ${patchdir}/${srcname}.patch failed."
 
 echo $PKG_CONFIG_PATH
 
