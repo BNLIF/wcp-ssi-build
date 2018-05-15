@@ -1,0 +1,11 @@
+--- a/pgraph/src/Pgrapher.cxx	2018-05-15 12:44:19.000000000 -0500
++++ b/pgraph/src/Pgrapher.cxx	2018-05-15 12:55:55.415293283 -0500
+@@ -28,7 +28,7 @@
+     std::string node = jone["node"].asString();
+ 
+     // We should NOT be the one creating this component.
+-    auto nptr = Factory::find_maybe_tn<INode>(node);
++    auto nptr = WireCell::Factory::find_maybe_tn<INode>(node);
+     if (!nptr) {
+         std::cerr << "Pgrapher: failed to get node " << node << "\n";
+         THROW(ValueError() << errmsg{"failed to get node"});
