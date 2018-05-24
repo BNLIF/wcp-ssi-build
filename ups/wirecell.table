@@ -102,6 +102,8 @@ Common:
       endif ( test `uname` = "Darwin" )
       # add the bin directory to the path
       pathPrepend(PATH, ${WIRECELL_FQ_DIR}/bin )
+      # wirecell path
+      envSet (WIRECELL_PATH, ${WIRECELL_FQ_DIR}/share/wirecell)
       # useful variables
       envPrepend(ROOT_INCLUDE_PATH, ${WIRECELL_INC} )
       envPrepend(CMAKE_PREFIX_PATH, ${WIRECELL_FQ_DIR} )
