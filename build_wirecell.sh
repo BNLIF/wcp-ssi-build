@@ -150,7 +150,7 @@ echo $PKG_CONFIG_PATH
 env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
       --with-jsoncpp=$JSONCPP_FQ_DIR \
       --with-jsonnet=$JSONNET_FQ_DIR \
-      --with-eigen=${EIGEN_DIR} \
+      --with-eigen-include=${EIGEN_DIR}/include/eigen3 \
       --with-root=${ROOTSYS} \
       --with-fftw=$FFTW_FQ_DIR \
       --with-fftw-include=$FFTW_INC \
