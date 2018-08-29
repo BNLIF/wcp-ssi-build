@@ -54,7 +54,7 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_7_0
+origpkgver=v0_8_0
 pkgver=${origpkgver}
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_04_04
@@ -166,6 +166,11 @@ env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
 
 # run tests.  Note, wcb does not return failure if some tests fail.
 ./wcb --alltests
+
+# Remove intermediate build and test products so they don't get
+# included in the copy of the source that goes into the final UPS
+# product.  Ignoring this adds more than 1GB of useless cruft.
+rm -rf build util/test_*json*
 
 set +x
 
