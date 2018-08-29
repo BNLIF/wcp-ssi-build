@@ -143,7 +143,7 @@ cd ${pkgdir} || exit 1
 tar xf ${tardir}/${pkgtarfile} || exit 1
 
 cd ${pkgdir}/${srcname} || exit 1
-patch -b -p1 < "${patchdir}/${srcname}.patch" || ssi_die "application of patch ${patchdir}/${srcname}.patch failed."
+#patch -b -p1 < "${patchdir}/${srcname}.patch" || ssi_die "application of patch ${patchdir}/${srcname}.patch failed."
 
 echo $PKG_CONFIG_PATH
 
@@ -170,6 +170,7 @@ env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
 # Remove intermediate build and test products so they don't get
 # included in the copy of the source that goes into the final UPS
 # product.  Ignoring this adds more than 1GB of useless cruft.
+cd ${pkgdir}/${srcname} || exit 1
 rm -rf build util/test_*json*
 
 set +x
