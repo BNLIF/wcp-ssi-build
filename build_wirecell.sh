@@ -109,6 +109,12 @@ else
   ssi_die "Qualifier $basequal not recognized."
 fi
 
+if [ "${OS1}" = "Darwin" ]
+then
+  macos_extras="--with-zlib=/usr"
+fi
+
+
 mkdir -p ${pkgdir}
 if [ ! -d ${pkgdir} ]
 then
@@ -159,6 +165,7 @@ env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
       --boost-includes=$BOOST_FQ_DIR/include \
       --boost-libs=$BOOST_FQ_DIR/lib \
       --boost-mt \
+      ${macos_extras} \
       --prefix="${pkgdir}"
 (( $? == 0 )) || ssi_die "wcb configure failed."
 
