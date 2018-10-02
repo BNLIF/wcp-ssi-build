@@ -3,7 +3,7 @@
 
 usage()
 {
-   echo "USAGE: `basename ${0}` <product_dir> <e14|e15|e17|c2> <debug|prof> [tar]"
+   echo "USAGE: `basename ${0}` <product_dir> <e15|e17|c2> <debug|prof> [tar]"
 }
 
 # -------------------------------------------------------------------
@@ -54,7 +54,7 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_8_0
+origpkgver=v0_9_0
 pkgver=${origpkgver}
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_04_04
