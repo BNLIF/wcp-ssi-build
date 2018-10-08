@@ -55,7 +55,7 @@ fi
 
 package=wirecell
 origpkgver=v0_9_1
-pkgver=${origpkgver}
+pkgver=${origpkgver}a
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_04_04
 
@@ -81,7 +81,9 @@ echo "building ${package} for ${OS}-${plat}-${qualdir} (flavor ${flvr})"
 # -------------------------------------------------------------------
 
 case ${extraqual} in
-debug) cflg="-g -O0";;
+debug) 
+   cflg="-g -O0"
+   ;;
 prof)  cflg="-O3 -g -DNDEBUG -fno-omit-frame-pointer";;
 * )
    echo "ERROR: please specify debug or prof"
@@ -165,6 +167,7 @@ env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
       --boost-includes=$BOOST_FQ_DIR/include \
       --boost-libs=$BOOST_FQ_DIR/lib \
       --boost-mt \
+      --build-debug="${cxxflg}" \
       ${macos_extras} \
       --prefix="${pkgdir}"
 (( $? == 0 )) || ssi_die "wcb configure failed."

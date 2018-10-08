@@ -46,7 +46,7 @@ fi
 
 package=wirecell
 origpkgver=v0_9_1
-pkgver=${origpkgver}
+pkgver=${origpkgver}a
 ssibuildshims_version=v1_04_04
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 sourceurl=https://github.com/WireCell/wire-cell-build.git
@@ -92,7 +92,8 @@ cd ${pkgdir}/tar/${srcname} || ssi_die "could not cd ${pkgdir}/tar/${srcname}"
 git checkout -b ${pkgver} ${pkgdotver}
 git submodule init
 git submodule update
-git submodule foreach git checkout -b ${pkgver} ${pkgdotver}
+git submodule foreach git checkout ${pkgdotver}
+git submodule foreach git checkout -b ${pkgver}
 cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
 tar cjf ${package}-${pkgdotver}.tar.bz2 --exclude=\.git ${srcname} || ssi_die "tar failed"
 rm -rf ${srcname}
