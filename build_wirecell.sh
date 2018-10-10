@@ -172,6 +172,7 @@ env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
       --prefix="${pkgdir}"
 (( $? == 0 )) || ssi_die "wcb configure failed."
 
+# add -vv to this line for verbose output
 ./wcb --notests build install || exit 1
 
 # run tests.  Note, wcb does not return failure if some tests fail.
@@ -181,7 +182,12 @@ env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
 # included in the copy of the source that goes into the final UPS
 # product.  Ignoring this adds more than 1GB of useless cruft.
 cd ${pkgdir}/${srcname} || exit 1
-rm -rf build util/test_*json*
+if [[ "${OS1}" == "Darwin" ]] && [[ "${extraqual}" == "debug" ]]; then
+  # keep the object files for macOS debugging ...
+  rm -rf util/test_*json*
+else
+  rm -rf build util/test_*json*
+fi
 
 set +x
 
