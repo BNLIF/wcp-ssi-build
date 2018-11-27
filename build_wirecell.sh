@@ -54,10 +54,10 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_9_4
+origpkgver=v0_10_2
 pkgver=${origpkgver}
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
-ssibuildshims_version=v1_04_04
+ssibuildshims_version=v1_04_09
 
 srcname=${package}-${pkgdotver}
 pkgtarfile=${srcname}.tar.bz2
