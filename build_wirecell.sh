@@ -54,7 +54,7 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_10_3
+origpkgver=v0_10_5
 pkgver=${origpkgver}
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_04_09
@@ -210,6 +210,7 @@ ${SSIBUILDSHIMS_DIR}/bin/declare_product ${product_dir} ${package} ${pkgver} ${f
 echo "Finished building ${package} ${pkgver}"
 setup ${package} ${pkgver} -q ${fullqual} -z ${product_dir}:${PRODUCTS}
 echo "wirecell is installed at ${WIRECELL_FQ_DIR}"
+echo "WIRECELL_PATH is ${WIRECELL_PATH}"
 
 # this must be last
 if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/bin ]
