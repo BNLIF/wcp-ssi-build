@@ -2,9 +2,6 @@
 
 # use the bootstrap script to build a source code distribution
 
-# git clone ssh://p-build-framework@cdcvs.fnal.gov/cvs/projects/build-framework-wirecell-ssi-build
-# bootstrap.sh <product_directory> 
-
 usage()
 {
    echo "USAGE: `basename ${0}` <product_dir>"
@@ -46,8 +43,8 @@ fi
 
 package=wirecell
 origpkgver=v0_10_9
-pkgver=${origpkgver}
-ssibuildshims_version=v1_04_09
+pkgver=${origpkgver}a
+ssibuildshims_version=v1_04_13
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 sourceurl=https://github.com/WireCell/wire-cell-build.git
 srcname="wirecell-${pkgdotver}"

@@ -3,7 +3,7 @@
 
 usage()
 {
-   echo "USAGE: `basename ${0}` <product_dir> <e15|e17|c2> <debug|prof> [tar]"
+   echo "USAGE: `basename ${0}` <product_dir> <e17|c2> <debug|prof> [tar]"
 }
 
 # -------------------------------------------------------------------
@@ -55,9 +55,9 @@ fi
 
 package=wirecell
 origpkgver=v0_10_9
-pkgver=${origpkgver}
+pkgver=${origpkgver}a
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
-ssibuildshims_version=v1_04_09
+ssibuildshims_version=v1_04_13
 
 srcname=${package}-${pkgdotver}
 pkgtarfile=${srcname}.tar.bz2
@@ -97,12 +97,12 @@ then
   cc=gcc
   cxx=g++
   cxxflg="${cflg} -std=c++14"
-elif [[ "${basequal}" == e17 ]]
+elif [[ "${basequal}" == e1[79] ]] || [[ "${basequal}" == e1[79]:py3 ]]
 then
   cc=gcc
   cxx=g++
   cxxflg="${cflg} -std=c++17"
-elif [[ "${basequal}" == c2 ]]
+elif [[ "${basequal}" == c[27] ]] || [[ "${basequal}" == c[27]:py3 ]]
 then
   cc=clang
   cxx=clang++
