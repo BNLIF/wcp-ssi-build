@@ -54,8 +54,8 @@ fi
 # -------------------------------------------------------------------
 
 package=wirecell
-origpkgver=v0_10_9
-pkgver=${origpkgver}a
+origpkgver=v0_11_2
+pkgver=${origpkgver}
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_04_13
 
