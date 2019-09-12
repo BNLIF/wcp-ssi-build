@@ -9,7 +9,7 @@ Qualifiers = "c2:py3:prof"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-py3-prof)
 
   Action = ExtraSetup
-    setupRequired(root v6_16_00 -q +c2:+py3:+prof)
+    setupRequired(root v6_18_02a -q +c2:+py3:+prof)
     setupRequired(boost v1_69_0 -q +c2:+prof)
     setupRequired(jsoncpp v1_7_7c -q +c2:+prof)
     setupRequired(jsonnet v0_11_2 -q +c2:+prof)
@@ -22,7 +22,7 @@ Qualifiers = "c2:py3:debug"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-py3-debug)
 
   Action = ExtraSetup
-    setupRequired(root v6_16_00 -q +c2:+py3:+debug)
+    setupRequired(root v6_18_02a -q +c2:+py3:+debug)
     setupRequired(boost v1_69_0 -q +c2:+debug)
     setupRequired(jsoncpp v1_7_7c -q +c2:+debug)
     setupRequired(jsonnet v0_11_2 -q +c2:+debug)
@@ -35,7 +35,7 @@ Qualifiers = "e17:py3:prof"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e17-py3-prof)
 
   Action = ExtraSetup
-    setupRequired(root v6_16_00 -q +e17:+py3:+prof)
+    setupRequired(root v6_18_02a -q +e17:+py3:+prof)
     setupRequired(boost v1_69_0 -q +e17:+prof)
     setupRequired(jsoncpp v1_7_7c -q +e17:+prof)
     setupRequired(jsonnet v0_11_2 -q +e17:+prof)
@@ -48,7 +48,7 @@ Qualifiers = "e17:py3:debug"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e17-py3-debug)
 
   Action = ExtraSetup
-    setupRequired(root v6_16_00 -q +e17:+py3:+debug)
+    setupRequired(root v6_18_02a -q +e17:+py3:+debug)
     setupRequired(boost v1_69_0 -q +e17:+debug)
     setupRequired(jsoncpp v1_7_7c -q +e17:+debug)
     setupRequired(jsonnet v0_11_2 -q +e17:+debug)
@@ -62,7 +62,7 @@ Qualifiers = "c2:prof"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-prof)
 
   Action = ExtraSetup
-    setupRequired(root v6_16_00 -q +c2:+prof)
+    setupRequired(root v6_18_02a -q +c2:+prof)
     setupRequired(boost v1_69_0 -q +c2:+prof)
     setupRequired(jsoncpp v1_7_7c -q +c2:+prof)
     setupRequired(jsonnet v0_11_2 -q +c2:+prof)
@@ -75,7 +75,7 @@ Qualifiers = "c2:debug"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-debug)
 
   Action = ExtraSetup
-    setupRequired(root v6_16_00 -q +c2:+debug)
+    setupRequired(root v6_18_02a -q +c2:+debug)
     setupRequired(boost v1_69_0 -q +c2:+debug)
     setupRequired(jsoncpp v1_7_7c -q +c2:+debug)
     setupRequired(jsonnet v0_11_2 -q +c2:+debug)
@@ -88,7 +88,7 @@ Qualifiers = "e17:prof"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e17-prof)
 
   Action = ExtraSetup
-    setupRequired(root v6_16_00 -q +e17:+prof)
+    setupRequired(root v6_18_02a -q +e17:+prof)
     setupRequired(boost v1_69_0 -q +e17:+prof)
     setupRequired(jsoncpp v1_7_7c -q +e17:+prof)
     setupRequired(jsonnet v0_11_2 -q +e17:+prof)
@@ -101,7 +101,7 @@ Qualifiers = "e17:debug"
     envSet (WIRECELL_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e17-debug)
 
   Action = ExtraSetup
-    setupRequired(root v6_16_00 -q +e17:+debug)
+    setupRequired(root v6_18_02a -q +e17:+debug)
     setupRequired(boost v1_69_0 -q +e17:+debug)
     setupRequired(jsoncpp v1_7_7c -q +e17:+debug)
     setupRequired(jsonnet v0_11_2 -q +e17:+debug)
