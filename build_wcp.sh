@@ -53,9 +53,9 @@ fi
 # package name and version
 # -------------------------------------------------------------------
 
-package=wirecell
-origpkgver=v0_12_4
-pkgver=${origpkgver}a
+package=wcp
+origpkgver=v0_1_0
+pkgver=${origpkgver}
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
 ssibuildshims_version=v1_04_13
 
@@ -167,7 +167,6 @@ echo $PKG_CONFIG_PATH
 
 env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
       --with-jsoncpp=$JSONCPP_FQ_DIR \
-      --with-jsonnet=$JSONNET_FQ_DIR \
       --with-eigen-include=${EIGEN_DIR}/include/eigen3 \
       --with-root=${ROOTSYS} \
       --with-fftw=$FFTW_FQ_DIR \
@@ -219,8 +218,7 @@ ${SSIBUILDSHIMS_DIR}/bin/declare_product ${product_dir} ${package} ${pkgver} ${f
 # this should not complain
 echo "Finished building ${package} ${pkgver}"
 setup ${package} ${pkgver} -q ${fullqual} -z ${product_dir}:${PRODUCTS}
-echo "wirecell is installed at ${WIRECELL_FQ_DIR}"
-echo "WIRECELL_PATH is ${WIRECELL_PATH}"
+echo "wcp is installed at ${WCP_FQ_DIR}"
 
 # this must be last
 if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/bin ]

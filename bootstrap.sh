@@ -41,13 +41,13 @@ then
    exit 1
 fi
 
-package=wirecell
-origpkgver=v0_12_4
-pkgver=${origpkgver}a
+package=wcp
+origpkgver=v0_1_0
+pkgver=${origpkgver}
 ssibuildshims_version=v1_04_13
 pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
-sourceurl=https://github.com/WireCell/wire-cell-build.git
-srcname="wirecell-${pkgdotver}"
+sourceurl=https://github.com/BNLIF/wire-cell.git
+srcname="wcp-${pkgdotver}"
 
 get_this_dir
 
