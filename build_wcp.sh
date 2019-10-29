@@ -143,9 +143,7 @@ fakedb=${product_dir}/${package}/${pkgver}/fakedb
 ${SSIBUILDSHIMS_DIR}/bin/fake_declare_product ${product_dir} ${package} ${pkgver} ${fullqual}
 
 cd ${product_dir}
-set -x
 setup -B ${package} ${pkgver} -f ${flvr} -q ${fullqual} -z ${fakedb}:${product_dir}:${PRODUCTS} || ssi_die "fake setup failed"
-set +x
 
 if [ -z ${EIGEN_DIR} ]
 then
@@ -184,7 +182,7 @@ env CC=${cc} CXX=${cxx} FC=gfortran ./waf-tools/waf configure \
 (( $? == 0 )) || ssi_die "wcb configure failed."
 
 # add -vv to this line for verbose output
-#./waf-tools/waf --notests -j 4 build install || exit 1
+./waf-tools/waf --notests -j 4 build install || exit 1
 
 # run tests.  Note, wcb does not return failure if some tests fail.
 #./waf-tools/waf --alltests
@@ -218,10 +216,9 @@ ${SSIBUILDSHIMS_DIR}/bin/declare_product ${product_dir} ${package} ${pkgver} ${f
 # common bottom stuff
 # -------------------------------------------------------------------
 
-set -x
-
 # this should not complain
 echo "Finished building ${package} ${pkgver}"
+cd ${product_dir}
 setup ${package} ${pkgver} -q ${fullqual} -z ${product_dir}:${PRODUCTS}
 echo "wcp is installed at ${WCP_FQ_DIR}"
 
@@ -231,7 +228,5 @@ then
    cd ${product_dir}
    ${SSIBUILDSHIMS_DIR}/bin/make_distribution_tarball ${product_dir} ${package} ${pkgver} ${fullqual}
 fi
-
-set +x
 
 exit 0
