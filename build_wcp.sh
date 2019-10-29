@@ -29,7 +29,9 @@ get_ssibuildshims()
        exit 1
     fi
     source `${UPS_DIR}/bin/ups setup ${SETUP_UPS}`
-    
+
+    cd ${product_dir}
+    echo "setup ssibuildshims ${ssibuildshims_version} -z ${product_dir}"
     setup ssibuildshims ${ssibuildshims_version} -z ${product_dir}
 }
 
@@ -54,9 +56,10 @@ fi
 # -------------------------------------------------------------------
 
 package=wcp
-origpkgver=v0_1_0
+origpkgver=v00_12_00
 pkgver=${origpkgver}
-pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
+#pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
+pkgdotver=`echo ${origpkgver}`
 ssibuildshims_version=v1_04_13
 
 srcname=${package}-${pkgdotver}
@@ -139,7 +142,10 @@ fi
 fakedb=${product_dir}/${package}/${pkgver}/fakedb
 ${SSIBUILDSHIMS_DIR}/bin/fake_declare_product ${product_dir} ${package} ${pkgver} ${fullqual}
 
-setup -B ${package} ${pkgver} -q ${fullqual} -z ${fakedb}:${product_dir}:${PRODUCTS} || ssi_die "fake setup failed"
+cd ${product_dir}
+set -x
+setup -B ${package} ${pkgver} -f ${flvr} -q ${fullqual} -z ${fakedb}:${product_dir}:${PRODUCTS} || ssi_die "fake setup failed"
+set +x
 
 if [ -z ${EIGEN_DIR} ]
 then
@@ -165,27 +171,23 @@ cd ${pkgdir}/${srcname} || exit 1
 
 echo $PKG_CONFIG_PATH
 
-env CC=${cc} CXX=${cxx} FC=gfortran ./wcb configure \
-      --with-jsoncpp=$JSONCPP_FQ_DIR \
-      --with-eigen-include=${EIGEN_DIR}/include/eigen3 \
-      --with-root=${ROOTSYS} \
-      --with-fftw=$FFTW_FQ_DIR \
-      --with-fftw-include=$FFTW_INC \
-      --with-fftw-lib=$FFTW_LIBRARY \
-      --with-tbb=no \
-      --boost-includes=$BOOST_FQ_DIR/include \
-      --boost-libs=$BOOST_FQ_DIR/lib \
-      --boost-mt \
-      --build-debug="${cxxflg}" \
-      ${macos_extras} \
-      --prefix="${pkgdir}"
+env CC=${cc} CXX=${cxx} FC=gfortran ./waf-tools/waf configure \
+    --with-root="$ROOTSYS" \
+    --boost-includes="$BOOST_INC" \
+    --boost-libs="$BOOST_LIB" \
+    --boost-mt \
+    --with-fftw="$FFTW_FQ_DIR" \
+    --with-fftw-include="$FFTW_INC" \
+    --with-fftw-lib="$FFTW_LIBRARY" \
+    --with-eigen="$EIGEN_DIR" \
+    --prefix="${pkgdir}"
 (( $? == 0 )) || ssi_die "wcb configure failed."
 
 # add -vv to this line for verbose output
-./wcb --notests build install || exit 1
+#./waf-tools/waf --notests -j 4 build install || exit 1
 
 # run tests.  Note, wcb does not return failure if some tests fail.
-./wcb --alltests
+#./waf-tools/waf --alltests
 
 # Remove intermediate build and test products so they don't get
 # included in the copy of the source that goes into the final UPS
@@ -198,8 +200,6 @@ else
   rm -rf build util/test_*json*
 fi
 
-set +x
-
 if [ ! -d ${pkgdir}/bin ]
 then
    echo "ERROR: failed to create ${pkgdir}/bin"
@@ -207,13 +207,18 @@ then
    exit 1
 fi
 
+set +x
+
 # real ups declare
+cd ${product_dir}
 ${SSIBUILDSHIMS_DIR}/bin/declare_product ${product_dir} ${package} ${pkgver} ${fullqual} || \
   ssi_die "failed to declare ${package} ${pkgver} ${fullqual}"
 
 # -------------------------------------------------------------------
 # common bottom stuff
 # -------------------------------------------------------------------
+
+set -x
 
 # this should not complain
 echo "Finished building ${package} ${pkgver}"
@@ -223,7 +228,10 @@ echo "wcp is installed at ${WCP_FQ_DIR}"
 # this must be last
 if [ "${maketar}" = "tar" ] && [ -d ${pkgdir}/bin ]
 then
+   cd ${product_dir}
    ${SSIBUILDSHIMS_DIR}/bin/make_distribution_tarball ${product_dir} ${package} ${pkgver} ${fullqual}
 fi
+
+set +x
 
 exit 0

@@ -27,8 +27,8 @@ ensure_ssibuildshims()
        ups list -aK+ ssibuildshims ${ssibuildshims_version} -z ${product_dir}
     else
        echo "Installing ssibuildshims ${ssibuildshims_version}"
-       curl -O http://scisoft.fnal.gov/scisoft/packages/ssibuildshims/${ssibuildshims_version}/ssibuildshims-${ssidotver}-noarch.tar.bz2
-       tar xf ssibuildshims-${ssidotver}-noarch.tar.bz2 || exit 1
+       wget http://scisoft.fnal.gov/scisoft/packages/ssibuildshims/${ssibuildshims_version}/ssibuildshims-${ssidotver}-noarch.tar.bz2
+       tar xjf ssibuildshims-${ssidotver}-noarch.tar.bz2 || exit 1
     fi
 }
 
@@ -42,10 +42,11 @@ then
 fi
 
 package=wcp
-origpkgver=v0_1_0
+origpkgver=v00_12_00
 pkgver=${origpkgver}
 ssibuildshims_version=v1_04_13
-pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
+#pkgdotver=`echo ${origpkgver} | sed -e 's/_/./g' | sed -e 's/^v//'`
+pkgdotver=`echo ${origpkgver}`
 sourceurl=https://github.com/BNLIF/wire-cell.git
 srcname="wcp-${pkgdotver}"
 
@@ -86,18 +87,19 @@ set -x
 cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
 git clone ${sourceurl} ${srcname}
 cd ${pkgdir}/tar/${srcname} || ssi_die "could not cd ${pkgdir}/tar/${srcname}"
-git checkout -b ${pkgver} ${pkgdotver}
+git checkout -b ${pkgver} remotes/origin/${pkgdotver}
 ./switch-git-urls
 git submodule init
 git submodule update
-git submodule foreach git checkout ${pkgdotver}
-git submodule foreach git checkout -b ${pkgver}
+#git submodule foreach git checkout ${pkgdotver}
+#git submodule foreach git checkout -b ${pkgver}
 cd ${pkgdir}/tar || ssi_die "could not cd ${pkgdir}/tar"
 tar cjf ${package}-${pkgdotver}.tar.bz2 --exclude=\.git ${srcname} || ssi_die "tar failed"
 rm -rf ${srcname}
 
 set +x
 
+cd ${product_dir}
 ${SSIBUILDSHIMS_DIR}/bin/make_source_code_tarball ${product_dir} ${package} ${pkgver}
 
 
