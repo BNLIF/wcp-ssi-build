@@ -1,59 +1,58 @@
 File    = table
 Product = wcp
 
-#*************************************************
-# Starting Group definition
 Group:
 
-Flavor     = ANY
+Flavor = ANY
 Qualifiers = "e17:prof"
 
+  Action = DefineFQ
+    envSet (WCP_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e17-prof)
 
-  Action = GetFQDir
-    if ( printenv CET_SUBDIR > /dev/null )
-      envSet( ${UPS_PROD_NAME_UC}_FQ_DIR, ${${UPS_PROD_NAME_UC}_DIR}/${CET_SUBDIR}.e17.prof )
-    else()
-      envSet( ${UPS_PROD_NAME_UC}_FQ_DIR, ${${UPS_PROD_NAME_UC}_DIR}/`get-directory-name subdir`.e17.prof )
-    endif ( printenv CET_SUBDIR > /dev/null )
-    fileTest( ${${UPS_PROD_NAME_UC}_FQ_DIR}, -d, "${${UPS_PROD_NAME_UC}_FQ_DIR} directory not found: SETUP ABORTED")
-
-  Action = GetProducts
+  Action = ExtraSetup
     setupRequired( root v6_12_06a -q +e17:+prof )
     setupRequired( boost v1_66_0a -q +e17:+prof )
-    setupRequired( eigen v3_3_4a )
+    setupRequired( gcc v7_3_0 )
 
+Flavor = ANY
+Qualifiers = "e17:debug"
+
+  Action = DefineFQ
+    envSet (WCP_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e17-debug)
+
+  Action = ExtraSetup
+    setupRequired( root v6_12_06a -q +e17:+debug )
+    setupRequired( boost v1_66_0a -q +e17:+debug )
+    setupRequired( gcc v7_3_0 )
 
 Common:
-  Action = setup
-    prodDir()
-    setupEnv()
-    envSet(${UPS_PROD_NAME_UC}_VERSION, v00_11_00)
-    # cetpkgsupport has get-directory-name and find-path
-    # cetpkgsupport also defines the CET_SUBDIR variable
-    setupRequired(cetpkgsupport)
-    exeActionRequired(GetFQDir)
-    envSet(${UPS_PROD_NAME_UC}_INC, ${${UPS_PROD_NAME_UC}_FQ_DIR}/include) 
-
-    exeActionRequired(GetProducts)
-
-    envSet(${UPS_PROD_NAME_UC}_LIB, ${${UPS_PROD_NAME_UC}_FQ_DIR}/lib)
-    envSet(${UPS_PROD_NAME_UC}_LIB64, ${${UPS_PROD_NAME_UC}_FQ_DIR}/lib64) 
-    if ( test `uname` = "Darwin" )
-      pathPrepend(DYLD_LIBRARY_PATH, ${${UPS_PROD_NAME_UC}_LIB})
-      pathPrepend(DYLD_LIBRARY_PATH, ${${UPS_PROD_NAME_UC}_LIB64})
-    else()
-      pathPrepend(LD_LIBRARY_PATH, ${${UPS_PROD_NAME_UC}_LIB})
-      pathPrepend(LD_LIBRARY_PATH, ${${UPS_PROD_NAME_UC}_LIB64})
-    endif ( test `uname` = "Darwin" )
-
-    # add the bin directory to the path
-    pathPrepend(PATH, ${${UPS_PROD_NAME_UC}_FQ_DIR}/bin )
-    # Prepend CMAKE_PREFIX_PATH for flavour qualified product
-    pathPrepend(CMAKE_PREFIX_PATH, ${${UPS_PROD_NAME_UC}_FQ_DIR})
-    pathPrepend(PKG_CONFIG_PATH, ${${UPS_PROD_NAME_UC}_FQ_DIR})
-    # Prepend ROOT_INCLUDE_PATH for dictionaries
-    pathPrepend(ROOT_INCLUDE_PATH, ${${UPS_PROD_NAME_UC}_INC}) 
+   Action=setup
+      proddir()
+      setupenv()
+      ExeActionRequired(DefineFQ)
+      envSet (WCP_VERSION, ${UPS_PROD_VERSION} )
+      # define the include directory
+      envSet (WCP_INC, ${WCP_FQ_DIR}/include)
+      # add the lib directory to LD_LIBRARY_PATH
+      if    ( sh -c 'for dd in lib;do [ -d ${WCP_FQ_DIR}/$dd ] && exit;done;exit 1' )
+          envSet( WCP_LIB, ${WCP_FQ_DIR}/lib )
+      endif ( sh -c 'for dd in lib;do [ -d ${WCP_FQ_DIR}/$dd ] && exit;done;exit 1' )
+      if    ( sh -c 'for dd in lib64;do [ -d ${WCP_FQ_DIR}/$dd ] && exit;done;exit 1' )
+          envSet( WCP_LIB, ${WCP_FQ_DIR}/lib64 )
+      endif ( sh -c 'for dd in lib64;do [ -d ${WCP_FQ_DIR}/$dd ] && exit;done;exit 1' )
+      if ( test `uname` = "Darwin" )
+  envPrepend(DYLD_LIBRARY_PATH, ${WCP_LIB})
+      else()
+  envPrepend(LD_LIBRARY_PATH, ${WCP_LIB})
+      endif ( test `uname` = "Darwin" )
+      # add the bin directory to the path
+      pathPrepend(PATH, ${WCP_FQ_DIR}/bin )
+      # useful variables
+      envPrepend(ROOT_INCLUDE_PATH, ${WCP_INC} )
+      envPrepend(CMAKE_PREFIX_PATH, ${WCP_FQ_DIR} )
+      envPrepend(PKG_CONFIG_PATH, ${WCP_FQ_DIR} )
+      # requirements
+      exeActionRequired(ExtraSetup)
+      setupRequired(eigen v3_3_4a)
 
 End:
-# End Group definition
-#*************************************************
