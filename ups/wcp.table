@@ -2,6 +2,54 @@ File    = table
 Product = wcp
 
 Group:
+Flavor = ANY
+Qualifiers = "c2:py3:prof"
+  Action = DefineFQ
+    envSet (WCP_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-py3-prof)
+  Action = ExtraSetup
+    setupRequired(root v6_12_06a -q +c2:+py3:+prof)
+    setupRequired(boost v1_66_0a -q +c2:+prof)
+    setupRequired( clang v5_0_1 )
+Flavor = ANY
+Qualifiers = "c2:py3:debug"
+  Action = DefineFQ
+    envSet (WCP_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-py3-debug)
+  Action = ExtraSetup
+    setupRequired(root v6_12_06a -q +c2:+py3:+debug)
+    setupRequired(boost v1_66_0a -q +c2:+debug)
+    setupRequired( clang v5_0_1 )
+Flavor = ANY
+Qualifiers = "e17:py3:prof"
+  Action = DefineFQ
+    envSet (WCP_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e17-py3-prof)
+  Action = ExtraSetup
+    setupRequired(root v6_12_06a -q +e17:+py3:+prof)
+    setupRequired(boost v1_66_0a -q +e17:+prof)
+    setupRequired( gcc v7_3_0 )
+Flavor = ANY
+Qualifiers = "e17:py3:debug"
+  Action = DefineFQ
+    envSet (WCP_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-e17-py3-debug)
+  Action = ExtraSetup
+    setupRequired(root v6_12_06a -q +e17:+py3:+debug)
+    setupRequired(boost v1_66_0a -q +e17:+debug)
+    setupRequired( gcc v7_3_0 )
+Flavor = ANY
+Qualifiers = "c2:prof"
+  Action = DefineFQ
+    envSet (WCP_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-prof)
+  Action = ExtraSetup
+    setupRequired(root v6_12_06a -q +c2:+prof)
+    setupRequired(boost v1_66_0a -q +c2:+prof)
+    setupRequired( clang v5_0_1 )
+Flavor = ANY
+Qualifiers = "c2:debug"
+  Action = DefineFQ
+    envSet (WCP_FQ_DIR, ${UPS_PROD_DIR}/${UPS_PROD_FLAVOR}-c2-debug)
+  Action = ExtraSetup
+    setupRequired(root v6_12_06a -q +c2:+debug)
+    setupRequired(boost v1_66_0a -q +c2:+debug)
+    setupRequired( clang v5_0_1 )
 
 Flavor = ANY
 Qualifiers = "e17:prof"
