@@ -82,16 +82,14 @@ Common:
       # define the include directory
       envSet (WCP_INC, ${WCP_FQ_DIR}/include)
       # add the lib directory to LD_LIBRARY_PATH
-      if    ( sh -c 'for dd in lib;do [ -d ${WCP_FQ_DIR}/$dd ] && exit;done;exit 1' )
-          envSet( WCP_LIB, ${WCP_FQ_DIR}/lib )
-      endif ( sh -c 'for dd in lib;do [ -d ${WCP_FQ_DIR}/$dd ] && exit;done;exit 1' )
-      if    ( sh -c 'for dd in lib64;do [ -d ${WCP_FQ_DIR}/$dd ] && exit;done;exit 1' )
-          envSet( WCP_LIB, ${WCP_FQ_DIR}/lib64 )
-      endif ( sh -c 'for dd in lib64;do [ -d ${WCP_FQ_DIR}/$dd ] && exit;done;exit 1' )
+      envSet( WCP_LIB, ${WCP_FQ_DIR}/lib )
+      envSet( WCP_LIB64, ${WCP_FQ_DIR}/lib64 )
       if ( test `uname` = "Darwin" )
-  envPrepend(DYLD_LIBRARY_PATH, ${WCP_LIB})
+         envPrepend(DYLD_LIBRARY_PATH, ${WCP_LIB})
+         envPrepend(DYLD_LIBRARY_PATH, ${WCP_LIB64})
       else()
-  envPrepend(LD_LIBRARY_PATH, ${WCP_LIB})
+         envPrepend(LD_LIBRARY_PATH, ${WCP_LIB})
+         envPrepend(LD_LIBRARY_PATH, ${WCP_LIB64})
       endif ( test `uname` = "Darwin" )
       # add the bin directory to the path
       pathPrepend(PATH, ${WCP_FQ_DIR}/bin )
